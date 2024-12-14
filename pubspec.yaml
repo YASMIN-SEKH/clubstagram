@@ -59,6 +59,8 @@ flutter:
   uses-material-design: false
   assets:
     - assets/background.jpg
+    - assets/aboutus.jpg
+    - assets/aboutus.gif
 
   # To add assets to your application, add an assets section, like this:
   # assets:

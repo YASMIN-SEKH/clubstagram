@@ -81,7 +81,7 @@ class WelcomePage extends StatelessWidget {
                             backgroundColor: Colors.white,
                             foregroundColor: Colors.black,
                           ),
-                          child: Text('Register →'),
+                          child: Text('REGISTER →'),
                         ),
                       ],
                     ),
@@ -121,7 +121,7 @@ class WelcomePage extends StatelessWidget {
                             foregroundColor: Colors.black,
                             padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                           ),
-                          child: Text('Apply with Devfolio'),
+                          child: Text('LOGIN'),
                         ),
                       ],
                     ),
@@ -130,36 +130,41 @@ class WelcomePage extends StatelessWidget {
                 ],
               ),
             ),
+
             // About Us Section
             Container(
-              color: Colors.white,
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/aboutus.jpg'), // About Us background image
+                  fit: BoxFit.cover,
+                ),
+              ),
               padding: const EdgeInsets.all(24.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // ABOUT US Title
                   Text(
-                    'About Us',
-                    style: GoogleFonts.playfairDisplay(
-                      fontSize: 36,
+                    'ABOUT US',
+                    style: GoogleFonts.robotoMono(
+                      fontSize: 84,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: Colors.greenAccent,
+                      letterSpacing: 2.0,
                     ),
                   ),
                   SizedBox(height: 16),
+                  // ABOUT US Content
                   Text(
-                    'Clubstagram is a dynamic platform designed to bring students and campus clubs together. Whether you want to create events, engage participants, or celebrate achievements, Clubstagram redefines campus involvement. Our mission is to foster creativity, collaboration, and a sense of belonging for all students. Join us in building unforgettable experiences!',
+                    'Clubstagram is a dynamic platform designed to bring students and campus clubs together.\nWhether you want to create events, engage participants, or celebrate achievements, Clubstagram redefines campus involvement.\nOur mission is to foster creativity, collaboration, and a sense of belonging for all students.\nJoin us in building unforgettable experiences!',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.black87,
+                      color: Colors.white70,
                       height: 1.5,
                     ),
-                  ),
-                  SizedBox(height: 24),
-                  Image.asset(
-                    'assets/about_us_image.png', // Optional image for About Us
-                    height: 200,
-                    fit: BoxFit.cover,
                   ),
                 ],
               ),
