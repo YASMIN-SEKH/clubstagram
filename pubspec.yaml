@@ -59,6 +59,7 @@ flutter:
   uses-material-design: false
   assets:
     - assets/background.jpg
+    - assets/events.jpg
     - assets/aboutus.jpg
     - assets/aboutus.gif
 
