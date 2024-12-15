@@ -4,9 +4,6 @@ import 'login.dart';
 import 'register.dart';
 import 'rsvp.dart';
 
-
-
-
 void main() {
   runApp(MyApp());
 }
@@ -55,8 +52,6 @@ class _WelcomePageState extends State<WelcomePage> {
             controller: _scrollController,
             child: Column(
               children: [
-
-
                 // Welcome Section
                 Container(
                   key: _homeSectionKey,
@@ -118,7 +113,6 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                 ),
 
-
                 // About Us Section
                 Container(
                   key: _aboutSectionKey,
@@ -170,11 +164,6 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                 ),
 
-
-
-                // Upcoming Events Section
-                // Upcoming Events Section
-                // Upcoming Events Section
                 // Upcoming Events Section
                 Container(
                   key: _upcomingEventsSectionKey,
@@ -194,7 +183,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       ),
                       SizedBox(height: 20),
                       SizedBox(
-                        height: 260, // Increased height to accommodate the RSVP button
+                        height: 260, // Same height as the past events section
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: [
@@ -216,7 +205,6 @@ class _WelcomePageState extends State<WelcomePage> {
                               eventDate: 'Feb 15, 2025',
                               link: 'https://example.com/event3',
                             ),
-
                           ],
                         ),
                       ),
@@ -224,8 +212,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                 ),
 
-
-// Past Events Section
+                // Past Events Section
                 Container(
                   key: _pastEventsSectionKey,
                   color: Colors.blueGrey,
@@ -243,7 +230,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       ),
                       SizedBox(height: 20),
                       SizedBox(
-                        height: 220,
+                        height: 260, // Same height as the upcoming events section
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: [
@@ -271,10 +258,6 @@ class _WelcomePageState extends State<WelcomePage> {
                     ],
                   ),
                 ),
-
-
-
-
               ],
             ),
           ),
@@ -310,7 +293,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           child: Text('About', style: TextStyle(color: Colors.white)),
                         ),
                         TextButton(
-                          onPressed: () => scrollToSection(_upcomingEventsSectionKey), //
+                          onPressed: () => scrollToSection(_upcomingEventsSectionKey),
                           child: Text('Upcoming Events', style: TextStyle(color: Colors.white)),
                         ),
                         TextButton(
@@ -349,160 +332,7 @@ class _WelcomePageState extends State<WelcomePage> {
       ),
     );
   }
-
-  final List<Event> events = [
-    Event(
-      title: 'Web3 Conference',
-      description: 'Explore the latest advancements in Web3 technologies, decentralized finance, and blockchain applications.',
-      icon: Icons.language,
-    ),
-    Event(
-      title: 'Gaming Summit',
-      description: 'Discover innovations in Web3 gaming, NFT integrations, and blockchain-based virtual worlds.',
-      icon: Icons.gamepad,
-    ),
-    Event(
-      title: 'Digital Identity Workshop',
-      description: 'Learn how to build secure, decentralized digital identities and protect user data.',
-      icon: Icons.person_pin,
-    ),
-  ];
 }
-
-class Event {
-  final String title;
-  final String description;
-  final IconData icon;
-
-  Event({required this.title, required this.description, required this.icon});
-}
-
-class EventCard extends StatelessWidget {
-  final String imagePath;
-  final String eventName;
-  final String eventDate;
-  final String description;
-
-  EventCard({
-    required this.imagePath,
-    required this.eventName,
-    required this.eventDate,
-    required this.description,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 6.0,
-            spreadRadius: 1.0,
-          ),
-        ],
-        image: DecorationImage(
-          image: AssetImage(imagePath),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Stack(
-        children: [
-          // Gradient Overlay for readability
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.0),
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.transparent, Colors.black54],
-              ),
-            ),
-          ),
-          // Event Details
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: Colors.black54,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(12.0),
-                  bottomRight: Radius.circular(12.0),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    eventName,
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    eventDate,
-                    style: TextStyle(color: Colors.white70, fontSize: 12),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    description,
-                    style: TextStyle(color: Colors.white70, fontSize: 10),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(height: 8),
-                  ElevatedButton(
-                    onPressed: () {
-                      // RSVP Action
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.black,
-                      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
-                    ),
-                    child: Text('RSVP'),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-final List<Map<String, String>> eventData = [
-  {
-    'imagePath': 'assets/events/techtalk.jpg',
-    'name': 'Tech Talk 2024',
-    'date': 'Dec 20, 2024',
-    'description': 'A technology session for future innovators.',
-  },
-  {
-    'imagePath': 'assets/events/innovationfest.jpeg',
-    'name': 'Innovation Fest',
-    'date': 'Jan 10, 2025',
-    'description': 'Showcase your innovative ideas and projects.',
-  },
-  {
-    'imagePath': 'assets/events/cultural.jpg',
-    'name': 'Cultural Night',
-    'date': 'Feb 15, 2025',
-    'description': 'Enjoy performances and cultural programs.',
-  },
-  {
-    'imagePath': 'assets/events/sportsmeet.jpg',
-    'name': 'Sports Meet 2025',
-    'date': 'Mar 5, 2025',
-    'description': 'A sports event to showcase athletic talent.',
-  },
-];
-
 
 class HoverableEventCard extends StatefulWidget {
   final String imagePath;
@@ -572,7 +402,13 @@ class _HoverableEventCardState extends State<HoverableEventCard> {
                 SizedBox(height: 8),
                 GestureDetector(
                   onTap: () {
-                    // Handle navigation logic here if needed
+                    // Navigate to RSVP Page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RSVPPage(eventTitle: widget.eventName),
+                      ),
+                    );
                   },
                   child: Text(
                     'Learn More →',
@@ -592,7 +428,6 @@ class _HoverableEventCardState extends State<HoverableEventCard> {
   }
 }
 
-// Upcoming Event Card
 class UpcomingEventCard extends HoverableEventCard {
   UpcomingEventCard({
     required String imagePath,
@@ -605,11 +440,9 @@ class UpcomingEventCard extends HoverableEventCard {
     eventDate: eventDate,
     link: link,
     overlayColor: Colors.black54, // Dark overlay for upcoming events
-
   );
 }
 
-// Past Event Card
 class PastEventCard extends HoverableEventCard {
   PastEventCard({
     required String imagePath,
@@ -625,4 +458,30 @@ class PastEventCard extends HoverableEventCard {
   );
 }
 
+class RSVPPage extends StatelessWidget {
+  final String eventTitle;
 
+  RSVPPage({required this.eventTitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("RSVP for $eventTitle")),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Text("You're about to RSVP for: $eventTitle", style: TextStyle(fontSize: 20)),
+            // Add your RSVP form or functionality here
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Confirm RSVP"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
