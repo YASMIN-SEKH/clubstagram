@@ -30,6 +30,7 @@ class _WelcomePageState extends State<WelcomePage> {
   final GlobalKey _aboutSectionKey = GlobalKey();
   final GlobalKey _upcomingEventsSectionKey = GlobalKey();
   final GlobalKey _pastEventsSectionKey = GlobalKey();
+  final GlobalKey _faqSectionKey = GlobalKey();
 
   void scrollToSection(GlobalKey sectionKey) {
     final RenderBox renderBox = sectionKey.currentContext?.findRenderObject() as RenderBox;
@@ -258,6 +259,45 @@ class _WelcomePageState extends State<WelcomePage> {
                     ],
                   ),
                 ),
+
+            // FAQ Section
+            Container(
+              key: _faqSectionKey,
+              color: Colors.grey[200],
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'FAQs',
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: _faqItems.length,
+                      itemBuilder: (context, index) {
+                        return FaqCard(
+                          item: _faqItems[index],
+                          onToggle: () {
+                            setState(() {
+                              _faqItems[index].isOpen = !_faqItems[index].isOpen;
+                            });
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
               ],
             ),
           ),
@@ -301,7 +341,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           child: Text('Past Events', style: TextStyle(color: Colors.white)),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () => scrollToSection(_faqSectionKey),
                           child: Text('FAQs', style: TextStyle(color: Colors.white)),
                         ),
                         TextButton(
@@ -333,6 +373,157 @@ class _WelcomePageState extends State<WelcomePage> {
     );
   }
 }
+
+final List<Event> events = [
+  Event(
+    title: 'Web3 Conference',
+    description: 'Explore the latest advancements in Web3 technologies and decentralized finance.',
+    icon: Icons.language,
+  ),
+  Event(
+    title: 'Gaming Summit',
+    description: 'Discover innovations in gaming, NFT integrations, and virtual worlds.',
+    icon: Icons.gamepad,
+  ),
+  Event(
+    title: 'Identity Workshop',
+    description: 'Learn to build secure digital identities and protect user data.',
+    icon: Icons.person_pin,
+  ),
+];
+
+final List<FaqItem> _faqItems = [
+  FaqItem(
+    question: 'Who can participate?',
+    answer: 'Only the 1st year students of IEM Kolkata (Newtown Campus) under UEM Kolkata can participate.',
+  ),
+  FaqItem(
+    question: 'What is the maximum/minimum team size?',
+    answer: 'The maximum team size is 4, and the minimum team size is 2.',
+  ),
+  FaqItem(
+    question: 'What are the domains of HackSnippet 3.0?',
+    answer: 'The domains of HackSnippet 3.0 are Web Development, Mobile App Development, and Data Science.',
+  ),
+  FaqItem(
+    question: 'What is the participation fee?',
+    answer: 'The participation fee is INR 100 per team.',
+  ),
+  FaqItem(
+    question: 'When and where will the grand finale be held?',
+    answer: 'The grand finale will be held on [Date] at [Venue].',
+  ),
+];
+
+
+
+class Event {
+  final String title;
+  final String description;
+  final IconData icon;
+
+  Event({required this.title, required this.description, required this.icon});
+}
+
+class EventCard extends StatelessWidget {
+  final Event event;
+
+  const EventCard({required this.event});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      elevation: 4,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 24,
+              backgroundColor: Colors.purple.withOpacity(0.1),
+              child: Icon(event.icon, color: Colors.purple, size: 30),
+            ),
+            SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    event.title,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    event.description,
+                    style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class FaqItem {
+  String question;
+  String answer;
+  bool isOpen;
+
+  FaqItem({
+    required this.question,
+    required this.answer,
+    this.isOpen = false,
+  });
+}
+
+class FaqCard extends StatelessWidget {
+  final FaqItem item;
+  final Function onToggle;
+
+  FaqCard({
+    required this.item,
+    required this.onToggle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: InkWell(
+        onTap: () => onToggle(),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                item.question,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              if (item.isOpen)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    item.answer,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
 class HoverableEventCard extends StatefulWidget {
   final String imagePath;
