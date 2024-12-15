@@ -71,6 +71,10 @@ flutter:
     - assets/past/art.jpg
     - assets/past/hack.jpg
     - assets/past/techexpo.jpg
+    - assets/clubs/code.jpeg
+    - assets/clubs/dance.jpg
+    - assets/clubs/gaming.png
+    - assets/clubs/music.jpeg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

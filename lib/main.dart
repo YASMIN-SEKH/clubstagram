@@ -32,6 +32,7 @@ class _WelcomePageState extends State<WelcomePage> {
   final GlobalKey _pastEventsSectionKey = GlobalKey();
   final GlobalKey _faqSectionKey = GlobalKey();
   final GlobalKey _contactUsKey = GlobalKey();
+  final GlobalKey _clubsKey = GlobalKey();
 
   void scrollToSection(GlobalKey sectionKey) {
     final RenderBox renderBox = sectionKey.currentContext?.findRenderObject() as RenderBox;
@@ -188,11 +189,12 @@ class _WelcomePageState extends State<WelcomePage> {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: [
-                            UpcomingEventCard(
-                              imagePath: 'assets/events/techtalk.jpg',
-                              eventName: 'Tech Talk 2024',
+                            HoverableEventCard(
+                              imagePath: 'assets/past/techexpo.jpg',
+                              eventName: 'Tech Expo 2024',
                               eventDate: 'Dec 20, 2024',
                               link: 'https://example.com/event1',
+                              isPastEvent: false, // Upcoming event
                             ),
                             UpcomingEventCard(
                               imagePath: 'assets/events/innovationfest.jpeg',
@@ -235,23 +237,26 @@ class _WelcomePageState extends State<WelcomePage> {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: [
-                            PastEventCard(
-                              imagePath: 'assets/past/techexpo.jpg',
-                              eventName: 'Tech Expo 2023',
-                              eventDate: 'Nov 12, 2023',
-                              link: 'https://example.com/pastevent1',
+                            HoverableEventCard(
+                              imagePath: 'assets/events/techtalk.jpg',
+                              eventName: 'Tech Talk 2023',
+                              eventDate: 'Dec 20, 2023',
+                              link: '',
+                              isPastEvent: true, // Past event
                             ),
-                            PastEventCard(
+                            HoverableEventCard(
                               imagePath: 'assets/past/hack.jpg',
                               eventName: 'CodeFest Finale',
                               eventDate: 'Oct 05, 2023',
-                              link: 'https://example.com/pastevent2',
+                              link: '',
+                              isPastEvent: true,
                             ),
-                            PastEventCard(
+                            HoverableEventCard(
                               imagePath: 'assets/past/art.jpg',
                               eventName: 'Art & Culture Week',
                               eventDate: 'Aug 19, 2023',
-                              link: 'https://example.com/pastevent3',
+                              link: '',
+                              isPastEvent: true,
                             ),
                           ],
                         ),
@@ -260,15 +265,73 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                 ),
 
-            // FAQ Section
+
+                // Clubs Section
+                Container(
+                  key: _clubsKey,
+                  color: Color(0xFF020F1F), // Dark background for the section
+                  padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Clubs',
+                        style: GoogleFonts.playfairDisplay(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      SizedBox(
+                        height: 220, // Container height for horizontal list
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            HoverableClubCard(
+                              imagePath: 'assets/events/sportsmeet.jpg',
+                              clubName: 'Sports Club',
+                              description: 'Join to explore and play various sports.',
+                            ),
+                            HoverableClubCard(
+                              imagePath: 'assets/clubs/code.jpeg',
+                              clubName: 'Coding Club',
+                              description: 'A club for coding enthusiasts and developers.',
+                            ),
+                            HoverableClubCard(
+                              imagePath: 'assets/clubs/gaming.png',
+                              clubName: 'Gaming Club',
+                              description: 'Gamers unite to play and compete.',
+                            ),
+                            HoverableClubCard(
+                              imagePath: 'assets/clubs/dance.jpg',
+                              clubName: 'Dance Club',
+                              description: 'Express yourself through movement and rhythm.',
+                            ),
+                            HoverableClubCard(
+                              imagePath: 'assets/clubs/music.jpeg',
+                              clubName: 'Music Club',
+                              description: 'Where music lovers create and perform.',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+
+                // FAQ Section
             Container(
               key: _faqSectionKey,
+              height: MediaQuery.of(context).size.height,
               color: Colors.purple[900],
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 15),
                     Text(
                       'FAQs',
                       textAlign: TextAlign.center,
@@ -303,6 +366,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 // Add this after the FAQ Section
                 Container(
                   key: _contactUsKey,
+                  height: MediaQuery.of(context).size.height,
                   color: const Color(0xFF2C2461), // Background color for Contact Us section
                   padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 40.0),
                   child: SingleChildScrollView(
@@ -415,10 +479,19 @@ class _WelcomePageState extends State<WelcomePage> {
                           onPressed: () => scrollToSection(_aboutSectionKey),
                           child: Text('About', style: TextStyle(color: Colors.white)),
                         ),
+
+                        TextButton(
+                          onPressed: () => scrollToSection(_faqSectionKey), //
+                          child: Text('FAQs', style: TextStyle(color: Colors.white)),
+                        ),
+                        TextButton(
+                          onPressed: () => scrollToSection(_contactUsKey),
+                          child: Text('Contact Us', style: TextStyle(color: Colors.white)),
+                        ),
                         DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
-                            dropdownColor: Colors.black,
-                            icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+                            dropdownColor: Colors.transparent,
+                            icon: Icon(Icons.arrow_drop_down, color: Colors.transparent),
                             items: [
                               DropdownMenuItem(
                                 value: 'upcoming',
@@ -441,8 +514,8 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                         DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
-                            dropdownColor: Colors.black,
-                            icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+                            dropdownColor: Colors.transparent,
+                            icon: Icon(Icons.arrow_drop_down, color: Colors.transparent),
                             items: [
                               DropdownMenuItem(
                                 value: 'sports',
@@ -459,17 +532,10 @@ class _WelcomePageState extends State<WelcomePage> {
                             ],
                             onChanged: (value) {
                               // Implement club-specific navigation if needed
+                              scrollToSection(_clubsKey);
                             },
                             hint: Text('Clubs', style: TextStyle(color: Colors.white)),
                           ),
-                        ),
-                        TextButton(
-                          onPressed: () => scrollToSection(_faqSectionKey), //
-                          child: Text('FAQs', style: TextStyle(color: Colors.white)),
-                        ),
-                        TextButton(
-                          onPressed: () => scrollToSection(_contactUsKey),
-                          child: Text('Contact Us', style: TextStyle(color: Colors.white)),
                         ),
                       ],
                     ),
@@ -669,6 +735,7 @@ class HoverableEventCard extends StatefulWidget {
   final String eventDate;
   final String link;
   final Color overlayColor;
+  final bool isPastEvent; // New property to check if the event is past
 
   HoverableEventCard({
     required this.imagePath,
@@ -676,6 +743,7 @@ class HoverableEventCard extends StatefulWidget {
     required this.eventDate,
     required this.link,
     this.overlayColor = Colors.black54, // Default overlay color
+    this.isPastEvent = false, // Default value is false for upcoming events
   });
 
   @override
@@ -731,23 +799,39 @@ class _HoverableEventCardState extends State<HoverableEventCard> {
                 SizedBox(height: 8),
                 GestureDetector(
                   onTap: () {
-                    // Navigate to RSVP Page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RSVPPage(eventTitle: widget.eventName),
-                      ),
-                    );
+                    if (widget.isPastEvent) {
+                      // Show Snackbar for past events
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('This event is completed.'),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    } else {
+                      // Navigate to the RSVP page for upcoming events
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RSVPPage(
+                            eventName: widget.eventName,
+                            eventDate: widget.eventDate,
+                            imagePath: widget.imagePath,
+                          ),
+                        ),
+                      );
+                    }
                   },
                   child: Text(
-                    'Learn More →',
+                    widget.isPastEvent ? 'Event Completed' : 'RSVP →',
                     style: TextStyle(
-                      color: Colors.lightBlueAccent,
+                      color: widget.isPastEvent ? Colors.grey : Colors.lightBlueAccent,
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
+
+
               ],
             ),
           ),
@@ -787,33 +871,33 @@ class PastEventCard extends HoverableEventCard {
   );
 }
 
-class RSVPPage extends StatelessWidget {
-  final String eventTitle;
-
-  RSVPPage({required this.eventTitle});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("RSVP for $eventTitle")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text("You're about to RSVP for: $eventTitle", style: TextStyle(fontSize: 20)),
-            // Add your RSVP form or functionality here
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("Confirm RSVP"),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class RSVPPage extends StatelessWidget {
+//   final String eventTitle;
+//
+//   RSVPPage({required this.eventTitle});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text("RSVP for $eventTitle")),
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Column(
+//           children: [
+//             Text("You're about to RSVP for: $eventTitle", style: TextStyle(fontSize: 20)),
+//             // Add your RSVP form or functionality here
+//             ElevatedButton(
+//               onPressed: () {
+//                 Navigator.pop(context);
+//               },
+//               child: Text("Confirm RSVP"),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 
 class CustomTextField extends StatelessWidget {
@@ -858,6 +942,307 @@ class CustomTextField extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class RSVPPage extends StatelessWidget {
+  final String eventName;
+  final String eventDate;
+  final String imagePath;
+
+  RSVPPage({
+    required this.eventName,
+    required this.eventDate,
+    required this.imagePath,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('RSVP for $eventName'),
+        backgroundColor: Colors.brown,
+      ),
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(imagePath, height: 200, fit: BoxFit.cover),
+              SizedBox(height: 20),
+              Text(
+                eventName,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              Text(
+                eventDate,
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // RSVP Action (e.g., redirect to external link or API call)
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('RSVP Confirmed for $eventName!')),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.brown,
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+                child: Text('Confirm RSVP'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+class ClubCard extends StatefulWidget {
+  final String imagePath;
+  final String clubName;
+  final String description;
+
+  ClubCard({
+    required this.imagePath,
+    required this.clubName,
+    required this.description,
+  });
+
+  @override
+  _ClubCardState createState() => _ClubCardState();
+}
+
+class _ClubCardState extends State<ClubCard> {
+  bool isJoined = false; // Tracks whether the user has joined the club
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 200,
+      margin: EdgeInsets.only(right: 16.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.0),
+        image: DecorationImage(
+          image: AssetImage(widget.imagePath),
+          fit: BoxFit.cover,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 6.0,
+            spreadRadius: 1.0,
+          ),
+        ],
+      ),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          padding: EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            color: Colors.black54,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(12.0),
+              bottomRight: Radius.circular(12.0),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.clubName,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+              SizedBox(height: 4),
+              Text(
+                widget.description,
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 12,
+                  height: 1.2,
+                ),
+              ),
+              SizedBox(height: 8),
+              ElevatedButton(
+                onPressed: () {
+                  if (!isJoined) {
+                    // Navigate to the club details page when joining
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ClubDetailsPage(clubName: widget.clubName),
+                      ),
+                    );
+                  }
+                  setState(() {
+                    isJoined = !isJoined; // Toggle join/joined status
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: isJoined ? Colors.green : Colors.blueAccent,
+                ),
+                child: Text(
+                  isJoined ? 'Joined' : 'Join',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+class ClubDetailsPage extends StatelessWidget {
+  final String clubName;
+
+  ClubDetailsPage({required this.clubName});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('$clubName Details'),
+        backgroundColor: Colors.brown,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              clubName,
+              style: GoogleFonts.playfairDisplay(
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Welcome to the $clubName! Explore and enjoy your activities.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16, color: Colors.black87),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HoverableClubCard extends StatefulWidget {
+  final String imagePath;
+  final String clubName;
+  final String description;
+
+  HoverableClubCard({
+    required this.imagePath,
+    required this.clubName,
+    required this.description,
+  });
+
+  @override
+  _HoverableClubCardState createState() => _HoverableClubCardState();
+}
+
+class _HoverableClubCardState extends State<HoverableClubCard> {
+  bool isHovered = false;
+  bool isJoined = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => isHovered = true),
+      onExit: (_) => setState(() => isHovered = false),
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
+        width: 200,
+        margin: EdgeInsets.only(right: 16.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+              color: isHovered ? Colors.white : Colors.black,
+              blurRadius: isHovered ? 12.0 : 6.0,
+              spreadRadius: isHovered ? 2.0 : 1.0,
+            ),
+          ],
+          image: DecorationImage(
+            image: AssetImage(widget.imagePath),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            padding: EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              color: Colors.black54,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(12.0),
+                bottomRight: Radius.circular(12.0),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.clubName,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  widget.description,
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 12,
+                    height: 1.2,
+                  ),
+                ),
+                SizedBox(height: 8),
+                ElevatedButton(
+                  onPressed: () {
+                    // Navigate to Club Details Page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ClubDetailsPage(clubName: widget.clubName),
+                      ),
+                    );
+                    setState(() {
+                      isJoined = !isJoined;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                    isJoined ? Colors.green : Colors.blueAccent,
+                  ),
+                  child: Text(
+                    isJoined ? 'Joined' : 'Join',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
