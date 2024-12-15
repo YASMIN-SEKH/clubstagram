@@ -31,6 +31,7 @@ class _WelcomePageState extends State<WelcomePage> {
   final GlobalKey _upcomingEventsSectionKey = GlobalKey();
   final GlobalKey _pastEventsSectionKey = GlobalKey();
   final GlobalKey _faqSectionKey = GlobalKey();
+  final GlobalKey _contactUsKey = GlobalKey();
 
   void scrollToSection(GlobalKey sectionKey) {
     final RenderBox renderBox = sectionKey.currentContext?.findRenderObject() as RenderBox;
@@ -139,11 +140,10 @@ class _WelcomePageState extends State<WelcomePage> {
                           Text(
                             'About Us',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.robotoMono(
-                              fontSize: 84,
+                            style: GoogleFonts.playfairDisplay(
+                              fontSize: 64,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              letterSpacing: 2.0,
+                              color: Colors.yellow[50],
                             ),
                           ),
                           SizedBox(height: 24),
@@ -177,7 +177,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       Text(
                         'Upcoming Events',
                         style: GoogleFonts.playfairDisplay(
-                          fontSize: 36,
+                          fontSize: 54,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -216,7 +216,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 // Past Events Section
                 Container(
                   key: _pastEventsSectionKey,
-                  color: Colors.blueGrey,
+                  color: Color(0xFF020F1F),
                   padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,7 +224,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       Text(
                         'Past Events',
                         style: GoogleFonts.playfairDisplay(
-                          fontSize: 36,
+                          fontSize: 54,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -263,7 +263,7 @@ class _WelcomePageState extends State<WelcomePage> {
             // FAQ Section
             Container(
               key: _faqSectionKey,
-              color: Colors.grey[200],
+              color: Colors.purple[900],
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -271,10 +271,11 @@ class _WelcomePageState extends State<WelcomePage> {
                   children: [
                     Text(
                       'FAQs',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 28,
+                        fontSize: 64,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: Colors.yellow[700],
                       ),
                     ),
                     SizedBox(height: 16),
@@ -297,6 +298,88 @@ class _WelcomePageState extends State<WelcomePage> {
                 ),
               ),
             ),
+
+                //contact us section
+                // Add this after the FAQ Section
+                Container(
+                  key: _contactUsKey,
+                  color: const Color(0xFF2C2461), // Background color for Contact Us section
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 40.0),
+                  child: SingleChildScrollView(
+                    child: Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // "Get in touch" title
+                          Text(
+                            "Get in touch",
+                            style: GoogleFonts.playfairDisplay(
+                              color: const Color(0xFFFFA774), // Orange color
+                              fontSize: 48,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+
+                          // Name Field
+                          CustomTextField(label: "Name"),
+                          const SizedBox(height: 20),
+
+                          // Email Field
+                          CustomTextField(label: "Email"),
+                          const SizedBox(height: 20),
+
+                          // Message Field
+                          CustomTextField(
+                            label: "Message",
+                            isMultiline: true,
+                          ),
+                          const SizedBox(height: 40),
+
+                          // Submit Button
+                          Center(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                // Add functionality here
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFFFFA774), // Orange color
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 100, vertical: 20),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              child: Text(
+                                "Shoooooooot",
+                                style: GoogleFonts.roboto(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color(0xFF2C2461), // Text color
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+
+                          // Footer Text
+                          Center(
+                            child: Text(
+                              "Your email will not be stored nor spammed, feel free to contact me.",
+                              style: GoogleFonts.roboto(
+                                color: Colors.grey.shade400,
+                                fontSize: 14,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
 
               ],
             ),
@@ -332,21 +415,61 @@ class _WelcomePageState extends State<WelcomePage> {
                           onPressed: () => scrollToSection(_aboutSectionKey),
                           child: Text('About', style: TextStyle(color: Colors.white)),
                         ),
-                        TextButton(
-                          onPressed: () => scrollToSection(_upcomingEventsSectionKey),
-                          child: Text('Upcoming Events', style: TextStyle(color: Colors.white)),
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            dropdownColor: Colors.black,
+                            icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+                            items: [
+                              DropdownMenuItem(
+                                value: 'upcoming',
+                                child: Text('Upcoming Events', style: TextStyle(color: Colors.white)),
+                              ),
+                              DropdownMenuItem(
+                                value: 'past',
+                                child: Text('Past Events', style: TextStyle(color: Colors.white)),
+                              ),
+                            ],
+                            onChanged: (value) {
+                              if (value == 'upcoming') {
+                                scrollToSection(_upcomingEventsSectionKey);
+                              } else if (value == 'past') {
+                                scrollToSection(_pastEventsSectionKey);
+                              }
+                            },
+                            hint: Text('Events', style: TextStyle(color: Colors.white)),
+                          ),
+                        ),
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            dropdownColor: Colors.black,
+                            icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+                            items: [
+                              DropdownMenuItem(
+                                value: 'sports',
+                                child: Text('Sports Club', style: TextStyle(color: Colors.white)),
+                              ),
+                              DropdownMenuItem(
+                                value: 'gaming',
+                                child: Text('Gaming Club', style: TextStyle(color: Colors.white)),
+                              ),
+                              DropdownMenuItem(
+                                value: 'coding',
+                                child: Text('Coding Club', style: TextStyle(color: Colors.white)),
+                              ),
+                            ],
+                            onChanged: (value) {
+                              // Implement club-specific navigation if needed
+                            },
+                            hint: Text('Clubs', style: TextStyle(color: Colors.white)),
+                          ),
                         ),
                         TextButton(
-                          onPressed: () => scrollToSection(_pastEventsSectionKey),
-                          child: Text('Past Events', style: TextStyle(color: Colors.white)),
-                        ),
-                        TextButton(
-                          onPressed: () => scrollToSection(_faqSectionKey),
+                          onPressed: () => scrollToSection(_faqSectionKey), //
                           child: Text('FAQs', style: TextStyle(color: Colors.white)),
                         ),
                         TextButton(
-                          onPressed: () {},
-                          child: Text('Contacts', style: TextStyle(color: Colors.white)),
+                          onPressed: () => scrollToSection(_contactUsKey),
+                          child: Text('Contact Us', style: TextStyle(color: Colors.white)),
                         ),
                       ],
                     ),
@@ -481,7 +604,7 @@ class FaqItem {
   });
 }
 
-class FaqCard extends StatelessWidget {
+class FaqCard extends StatefulWidget {
   final FaqItem item;
   final Function onToggle;
 
@@ -491,29 +614,43 @@ class FaqCard extends StatelessWidget {
   });
 
   @override
+  _FaqCardState createState() => _FaqCardState();
+}
+
+class _FaqCardState extends State<FaqCard> {
+  bool isHovering = false;
+
+  @override
   Widget build(BuildContext context) {
     return Card(
+      color: isHovering ? Colors.grey[800] : Colors.black87,
       margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: InkWell(
-        onTap: () => onToggle(),
+        onHover: (hovering) {
+          setState(() {
+            isHovering = hovering;
+          });
+        },
+        onTap: () => widget.onToggle(),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                item.question,
+                widget.item.question,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
-              if (item.isOpen)
+              if (widget.item.isOpen)
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                    item.answer,
-                    style: TextStyle(fontSize: 16),
+                    widget.item.answer,
+                    style: TextStyle(fontSize: 16, color: Colors.white70),
                   ),
                 ),
             ],
@@ -523,6 +660,7 @@ class FaqCard extends StatelessWidget {
     );
   }
 }
+
 
 
 class HoverableEventCard extends StatefulWidget {
@@ -673,6 +811,53 @@ class RSVPPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+
+class CustomTextField extends StatelessWidget {
+  final String label;
+  final bool isMultiline;
+
+  const CustomTextField({
+    required this.label,
+    this.isMultiline = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: GoogleFonts.roboto(
+            color: Colors.grey.shade400,
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: const Color(0xFFFFA774), // Orange underline color
+                width: 2,
+              ),
+            ),
+          ),
+          child: TextField(
+            maxLines: isMultiline ? 5 : 1,
+            style: const TextStyle(color: Colors.white),
+            cursorColor: const Color(0xFFFFA774),
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(bottom: 8.0),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

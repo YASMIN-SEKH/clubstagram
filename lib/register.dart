@@ -26,7 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   // Dropdown options
   final List<String> _yearLevels = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
-  final List<String> _degreePrograms = ['BS Computer Science', 'BS IT', 'BS Engineering'];
+  final List<String> _degreePrograms = ['B.Tech Computer Science', 'B.Tech IT', 'B.Tech Engineering'];
   final List<String> _months = ['January', 'February', 'March', 'April', 'May', 'June'];
   final List<String> _days = List.generate(31, (index) => '${index + 1}');
   final List<String> _years = List.generate(100, (index) => '${DateTime.now().year - index}');
@@ -49,6 +49,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -60,177 +62,147 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         child: Center(
           child: SingleChildScrollView(
-            child: Card(
-              margin: EdgeInsets.all(20),
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Text(
-                          'STUDENT REGISTRATION FORM',
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      SizedBox(height: 24),
-
-                      Text(
-                        'Basic Information',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                      ),
-                      Divider(),
-                      SizedBox(height: 16),
-
-                      _buildTextField(_firstNameController, 'First Name'),
-                      SizedBox(height: 16),
-                      _buildTextField(_middleNameController, 'Middle Name'),
-                      SizedBox(height: 16),
-                      _buildTextField(_lastNameController, 'Last Name'),
-                      SizedBox(height: 16),
-                      _buildTextField(
-                        _studentNumberController,
-                        'Student Number',
-                        hintText: 'e.g. 11183021',
-                        keyboardType: TextInputType.number,
-                      ),
-                      SizedBox(height: 16),
-                      _buildDropdown(
-                        value: _selectedYearLevel,
-                        items: _yearLevels,
-                        label: 'Year Level',
-                        onChanged: (value) => setState(() => _selectedYearLevel = value),
-                      ),
-                      SizedBox(height: 16),
-                      _buildDropdown(
-                        value: _selectedDegreeProgram,
-                        items: _degreePrograms,
-                        label: 'Degree Program',
-                        onChanged: (value) =>
-                            setState(() => _selectedDegreeProgram = value),
-                      ),
-                      SizedBox(height: 16),
-                      _buildTextField(
-                        _emailController,
-                        'Email',
-                        hintText: 'example@example.com',
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      SizedBox(height: 16),
-                      _buildTextField(
-                        _phoneNumberController,
-                        'Phone Number',
-                        hintText: '(000) 000-0000',
-                        keyboardType: TextInputType.phone,
-                      ),
-                      SizedBox(height: 16),
-
-                      Text(
-                        'Birth Date',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildDropdown(
-                              value: _selectedMonth,
-                              items: _months,
-                              label: 'Month',
-                              onChanged: (value) => setState(() => _selectedMonth = value),
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child: _buildDropdown(
-                              value: _selectedDay,
-                              items: _days,
-                              label: 'Day',
-                              onChanged: (value) => setState(() => _selectedDay = value),
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child: _buildDropdown(
-                              value: _selectedYear,
-                              items: _years,
-                              label: 'Year',
-                              onChanged: (value) => setState(() => _selectedYear = value),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 24),
-
-                      // Academic Background (File Upload)
-                      Text(
-                        'Academic Background',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                      ),
-                      Divider(),
-                      SizedBox(height: 16),
-                      GestureDetector(
-                        onTap: _pickFile,
-                        child: Container(
-                          padding: EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Column(
-                            children: [
-                              Icon(Icons.upload_file, size: 40, color: Colors.grey),
-                              SizedBox(height: 8),
-                              Text(_uploadedFile ?? 'Upload a File (PDF, DOCX)', style: TextStyle(color: Colors.grey)),
-                            ],
+            physics: BouncingScrollPhysics(),
+            child: Container(
+              width: screenWidth * 0.6, // 90% of screen width
+              child: Card(
+                margin: EdgeInsets.all(20),
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Text(
+                            'STUDENT REGISTRATION FORM',
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
                           ),
                         ),
-                      ),
-                      SizedBox(height: 24),
+                        SizedBox(height: 24),
 
-                      // Extra Curricular Participation
-                      Text(
-                        'Extra Curricular Participation',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                      ),
-                      Divider(),
-                      SizedBox(height: 16),
-                      _buildMultiCheckbox('Extra Curriculars', _extraCurriculars, _selectedExtraCurriculars),
-
-                      // Skills/Talents
-                      Text(
-                        'Skills/Talents',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                      ),
-                      Divider(),
-                      SizedBox(height: 16),
-                      _buildMultiCheckbox('Skills', _skills, _selectedSkills),
-                      SizedBox(height: 24),
-
-                      // Submit Button
-                      Center(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              _submitForm();
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueAccent,
-                            foregroundColor: Colors.white,
-                            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                          ),
-                          child: Text('Register'),
+                        Text(
+                          'Basic Information',
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                         ),
-                      ),
-                    ],
+                        Divider(),
+                        SizedBox(height: 16),
+
+                        _buildTextField(_firstNameController, 'First Name'),
+                        SizedBox(height: 16),
+                        _buildTextField(
+                          _studentNumberController,
+                          'Student Number',
+                          hintText: 'e.g. 11183021',
+                          keyboardType: TextInputType.number,
+                        ),
+                        SizedBox(height: 16),
+                        _buildDropdown(
+                          value: _selectedYearLevel,
+                          items: _yearLevels,
+                          label: 'Year Level',
+                          onChanged: (value) => setState(() => _selectedYearLevel = value),
+                        ),
+                        SizedBox(height: 16),
+                        _buildDropdown(
+                          value: _selectedDegreeProgram,
+                          items: _degreePrograms,
+                          label: 'Degree Program',
+                          onChanged: (value) =>
+                              setState(() => _selectedDegreeProgram = value),
+                        ),
+                        SizedBox(height: 16),
+                        _buildTextField(
+                          _emailController,
+                          'Email',
+                          hintText: 'example@example.com',
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        SizedBox(height: 16),
+                        _buildTextField(
+                          _phoneNumberController,
+                          'Phone Number',
+                          hintText: '(91) 0000000000',
+                          keyboardType: TextInputType.phone,
+                        ),
+                        SizedBox(height: 16),
+
+                        Text(
+                          'Birth Date',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _buildDropdown(
+                                value: _selectedMonth,
+                                items: _months,
+                                label: 'Month',
+                                onChanged: (value) => setState(() => _selectedMonth = value),
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: _buildDropdown(
+                                value: _selectedDay,
+                                items: _days,
+                                label: 'Day',
+                                onChanged: (value) => setState(() => _selectedDay = value),
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: _buildDropdown(
+                                value: _selectedYear,
+                                items: _years,
+                                label: 'Year',
+                                onChanged: (value) => setState(() => _selectedYear = value),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 24),
+
+                        Text(
+                          'Extra Curricular Participation',
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                        ),
+                        Divider(),
+                        _buildMultiCheckbox('Extra Curriculars', _extraCurriculars, _selectedExtraCurriculars),
+                        SizedBox(height: 16),
+
+                        Text(
+                          'Skills/Talents',
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                        ),
+                        Divider(),
+                        _buildMultiCheckbox('Skills', _skills, _selectedSkills),
+                        SizedBox(height: 24),
+
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _submitForm();
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueAccent,
+                              foregroundColor: Colors.white,
+                              padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                            ),
+                            child: Text('Register'),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -262,9 +234,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }) {
     return DropdownButtonFormField<String>(
       value: value,
-      items: items.map((item) {
-        return DropdownMenuItem(value: item, child: Text(item));
-      }).toList(),
+      items: items.map((item) => DropdownMenuItem(value: item, child: Text(item))).toList(),
       onChanged: onChanged,
       decoration: InputDecoration(
         labelText: label,
@@ -276,35 +246,21 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget _buildMultiCheckbox(String label, List<String> options, List<String> selectedItems) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        for (String option in options)
-          CheckboxListTile(
-            value: selectedItems.contains(option),
-            title: Text(option),
-            onChanged: (bool? value) {
-              setState(() {
-                if (value == true) {
-                  selectedItems.add(option);
-                } else {
-                  selectedItems.remove(option);
-                }
-              });
-            },
-          ),
-      ],
+      children: options.map((option) {
+        return CheckboxListTile(
+          value: selectedItems.contains(option),
+          title: Text(option),
+          onChanged: (bool? value) {
+            setState(() {
+              value! ? selectedItems.add(option) : selectedItems.remove(option);
+            });
+          },
+        );
+      }).toList(),
     );
   }
 
-  void _pickFile() {
-    // Handle file picking logic here
-    setState(() {
-      _uploadedFile = 'FileName.pdf';  // Placeholder for file name
-    });
-  }
-
   void _submitForm() {
-    // Implement form submission logic here
     print('Form submitted');
   }
 }
-
