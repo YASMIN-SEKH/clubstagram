@@ -54,6 +54,8 @@ class _WelcomePageState extends State<WelcomePage> {
             controller: _scrollController,
             child: Column(
               children: [
+
+
                 // Welcome Section
                 Container(
                   key: _homeSectionKey,
@@ -115,6 +117,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                 ),
 
+
                 // About Us Section
                 Container(
                   key: _aboutSectionKey,
@@ -166,46 +169,61 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                 ),
 
+
+
+                // Upcoming Events Section
+                // Upcoming Events Section
                 // Upcoming Events Section
                 Container(
                   key: _upcomingEventsSectionKey,
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/events.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  // color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Upcoming Events',
-                          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  color: Colors.white,
+                  padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Section Title
+                      Text(
+                        'Upcoming Events',
+                        style: GoogleFonts.playfairDisplay(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.brown,
                         ),
-                        SizedBox(height: 8),
-                        Text(
-                          'In a world fueled by innovation, every choice matters. Here, you don\'t just adapt; you define. It\'s more than technology — it\'s your legacy.',
-                          style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                        ),
-                        SizedBox(height: 16),
-                        Expanded(
-                          child: ListView.builder(
+                      ),
+                      SizedBox(height: 20),
+
+                      // Responsive Grid Layout for Event Cards
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          int crossAxisCount = constraints.maxWidth > 600 ? 3 : 2; // Responsive grid
+
+                          return GridView.builder(
                             shrinkWrap: true,
-                            itemCount: events.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: crossAxisCount,
+                              crossAxisSpacing: 16.0,
+                              mainAxisSpacing: 16.0,
+                              childAspectRatio: 0.85, // Adjusted for description and RSVP button
+                            ),
+                            itemCount: eventData.length,
                             itemBuilder: (context, index) {
-                              return EventCard(event: events[index]);
+                              final event = eventData[index];
+                              return EventCard(
+                                imagePath: event['imagePath']!,
+                                eventName: event['name']!,
+                                eventDate: event['date']!,
+                                description: event['description']!,
+                              );
                             },
-                          ),
-                        ),
-                      ],
-                    ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
+
+
               ],
             ),
           ),
@@ -309,59 +327,128 @@ class Event {
 }
 
 class EventCard extends StatelessWidget {
-  final Event event;
+  final String imagePath;
+  final String eventName;
+  final String eventDate;
+  final String description;
 
-  const EventCard({required this.event});
+  EventCard({
+    required this.imagePath,
+    required this.eventName,
+    required this.eventDate,
+    required this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 24,
-              backgroundColor: Colors.purple.withOpacity(0.1),
-              child: Icon(event.icon, color: Colors.purple, size: 30),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 6.0,
+            spreadRadius: 1.0,
+          ),
+        ],
+        image: DecorationImage(
+          image: AssetImage(imagePath),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Stack(
+        children: [
+          // Gradient Overlay for readability
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12.0),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.transparent, Colors.black54],
+              ),
             ),
-            SizedBox(width: 16),
-            Expanded(
+          ),
+          // Event Details
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              padding: EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(12.0),
+                  bottomRight: Radius.circular(12.0),
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    event.title,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    eventName,
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 4),
                   Text(
-                    event.description,
-                    style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                    eventDate,
+                    style: TextStyle(color: Colors.white70, fontSize: 12),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    description,
+                    style: TextStyle(color: Colors.white70, fontSize: 10),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 8),
-                  GestureDetector(
-                    onTap: () {
-                      // Handle "Learn more" button tap
+                  ElevatedButton(
+                    onPressed: () {
+                      // RSVP Action
                     },
-                    child: Text(
-                      'Learn more',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 14,
-                        decoration: TextDecoration.underline,
-                      ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
                     ),
+                    child: Text('RSVP'),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
+
+final List<Map<String, String>> eventData = [
+  {
+    'imagePath': 'assets/events/techtalk.jpg',
+    'name': 'Tech Talk 2024',
+    'date': 'Dec 20, 2024',
+    'description': 'A technology session for future innovators.',
+  },
+  {
+    'imagePath': 'assets/events/innovationfest.jpeg',
+    'name': 'Innovation Fest',
+    'date': 'Jan 10, 2025',
+    'description': 'Showcase your innovative ideas and projects.',
+  },
+  {
+    'imagePath': 'assets/events/cultural.jpg',
+    'name': 'Cultural Night',
+    'date': 'Feb 15, 2025',
+    'description': 'Enjoy performances and cultural programs.',
+  },
+  {
+    'imagePath': 'assets/events/sportsmeet.jpg',
+    'name': 'Sports Meet 2025',
+    'date': 'Mar 5, 2025',
+    'description': 'A sports event to showcase athletic talent.',
+  },
+];
+
