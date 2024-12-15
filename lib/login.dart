@@ -1,9 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
 
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-class LoginPage extends StatelessWidget {
+  void _handleLogin(BuildContext context) {
+    final username = _usernameController.text;
+    final password = _passwordController.text;
+
+    if (username == 'Rahul' && password == 'Rahul@123') {
+      // Navigate to student home page
+      Navigator.pushNamed(context, '/home');
+    } else {
+      // Show error dialog
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Invalid Credentials'),
+          content: Text('Please enter the correct username and password.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +43,7 @@ class LoginPage extends StatelessWidget {
           padding: EdgeInsets.all(24.0),
           margin: EdgeInsets.symmetric(horizontal: 32, vertical: 32),
           decoration: BoxDecoration(
-            color: Color(0xFFD1C4E9), // Light Purple Background
+            color: Color(0xFFD1C4E9),
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
               BoxShadow(
@@ -27,14 +57,13 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Top Circular Icon
               CircleAvatar(
                 backgroundColor: Colors.amber,
                 radius: 32,
               ),
               SizedBox(height: 24),
-              // Username Input
               TextField(
+                controller: _usernameController,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
@@ -45,8 +74,8 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16),
-              // Password Input
               TextField(
+                controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   filled: true,
@@ -58,16 +87,13 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 24),
-              // Login Button
               SizedBox(
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () {
-                    // Add functionality for login here
-                  },
+                  onPressed: () => _handleLogin(context),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.indigo, // Blue button background
+                    backgroundColor: Colors.indigo,
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -75,7 +101,7 @@ class LoginPage extends StatelessWidget {
                   ),
                   child: Text(
                     'LOGIN',
-                    style: GoogleFonts.robotoMono(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1.5,
@@ -84,11 +110,8 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 12),
-              // Optional: "Forgot Password" Link
               TextButton(
-                onPressed: () {
-                  // Handle forgot password
-                },
+                onPressed: () {},
                 child: Text(
                   'Forgot Password?',
                   style: TextStyle(

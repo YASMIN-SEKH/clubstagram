@@ -68,9 +68,16 @@ flutter:
     - assets/events/innovationfest.jpeg
     - assets/events/sportsmeet.jpg
     - assets/events/techtalk.jpg
+    - assets/events/web.png
+    - assets/events/identity.jpeg
+    - assets/events/game.png
     - assets/past/art.jpg
     - assets/past/hack.jpg
     - assets/past/techexpo.jpg
+    - assets/past/art.jpeg
+    - assets/past/concert.jpeg
+    - assets/past/dance.jpg
+    - assets/past/web.jpeg
     - assets/clubs/code.jpeg
     - assets/clubs/dance.jpg
     - assets/clubs/gaming.png

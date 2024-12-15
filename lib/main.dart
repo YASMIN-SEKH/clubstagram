@@ -13,7 +13,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: WelcomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomePage(),
+        '/home': (context) => LoginPage(), // Define the home route
+        '/welcome': (context) => WelcomePage(),
+      },
     );
   }
 }
@@ -208,6 +213,31 @@ class _WelcomePageState extends State<WelcomePage> {
                               eventDate: 'Feb 15, 2025',
                               link: 'https://example.com/event3',
                             ),
+                            UpcomingEventCard(
+                              imagePath: 'assets/events/web.png',
+                              eventName: 'Web3 Conference',
+                              eventDate: 'March 13, 2025',
+                              link: 'https://example.com/event3',
+                            ),
+                            UpcomingEventCard(
+                              imagePath: 'assets/events/game.png',
+                              eventName: 'Gaming Summit',
+                              eventDate: 'April 15, 2025',
+                              link: 'https://example.com/event3',
+                            ),
+                            UpcomingEventCard(
+                              imagePath: 'assets/past/hack.jpg',
+                              eventName: 'Hack Fest',
+                              eventDate: 'April 25, 2025',
+                              link: 'https://example.com/event3',
+                            ),
+                            UpcomingEventCard(
+                              imagePath: 'assets/events/identity.jpeg',
+                              eventName: 'Identity Workshop',
+                              eventDate: 'May 01, 2025',
+                              link: 'https://example.com/event3',
+                            ),
+
                           ],
                         ),
                       ),
@@ -248,6 +278,41 @@ class _WelcomePageState extends State<WelcomePage> {
                               imagePath: 'assets/past/hack.jpg',
                               eventName: 'CodeFest Finale',
                               eventDate: 'Oct 05, 2023',
+                              link: '',
+                              isPastEvent: true,
+                            ),
+                            HoverableEventCard(
+                              imagePath: 'assets/past/art.jpg',
+                              eventName: 'Art & Culture Week',
+                              eventDate: 'Aug 19, 2023',
+                              link: '',
+                              isPastEvent: true,
+                            ),
+                            HoverableEventCard(
+                              imagePath: 'assets/past/web.jpeg',
+                              eventName: 'Webinar: Driving business innovation through IT and Cloud cost transformation',
+                              eventDate: 'Aug 19, 2023',
+                              link: '',
+                              isPastEvent: true,
+                            ),
+                            HoverableEventCard(
+                              imagePath: 'assets/past/art.jpeg',
+                              eventName: 'Art show',
+                              eventDate: 'Aug 19, 2023',
+                              link: '',
+                              isPastEvent: true,
+                            ),
+                            HoverableEventCard(
+                              imagePath: 'assets/past/concert.jpeg',
+                              eventName: 'Musical Night',
+                              eventDate: 'Aug 19, 2023',
+                              link: '',
+                              isPastEvent: true,
+                            ),
+                            HoverableEventCard(
+                              imagePath: 'assets/past/dance.jpg',
+                              eventName: 'Dance show',
+                              eventDate: 'Aug 19, 2023',
                               link: '',
                               isPastEvent: true,
                             ),
@@ -563,44 +628,28 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 }
 
-final List<Event> events = [
-  Event(
-    title: 'Web3 Conference',
-    description: 'Explore the latest advancements in Web3 technologies and decentralized finance.',
-    icon: Icons.language,
-  ),
-  Event(
-    title: 'Gaming Summit',
-    description: 'Discover innovations in gaming, NFT integrations, and virtual worlds.',
-    icon: Icons.gamepad,
-  ),
-  Event(
-    title: 'Identity Workshop',
-    description: 'Learn to build secure digital identities and protect user data.',
-    icon: Icons.person_pin,
-  ),
-];
+
 
 final List<FaqItem> _faqItems = [
   FaqItem(
-    question: 'Who can participate?',
-    answer: 'Only the 1st year students of IEM Kolkata (Newtown Campus) under UEM Kolkata can participate.',
+    question: 'What is Clubstagram?',
+    answer: 'Clubstagram is a platform that connects students to various clubs and events in their institution. Students can explore clubs, join them, RSVP for events, and track their participation in both past and upcoming activities.',
   ),
   FaqItem(
-    question: 'What is the maximum/minimum team size?',
-    answer: 'The maximum team size is 4, and the minimum team size is 2.',
+    question: 'Who can use Clubstagram?',
+    answer: 'Clubstagram is designed for students and administrators. Students can use it to create profiles, join clubs, and participate in events, while administrators can manage clubs and events.',
   ),
   FaqItem(
-    question: 'What are the domains of HackSnippet 3.0?',
-    answer: 'The domains of HackSnippet 3.0 are Web Development, Mobile App Development, and Data Science.',
+    question: 'How can I register on Clubstagram?',
+    answer: 'To register, log in with the provided credentials (e.g., Rahul / Rahul@123 for students or admin / admin@123 for administrators). After logging in, students can complete their profile and start engaging with clubs and events.',
   ),
   FaqItem(
-    question: 'What is the participation fee?',
-    answer: 'The participation fee is INR 100 per team.',
+    question: 'What features are available for students?',
+    answer: 'Students can: View and join clubs of their choice. RSVP for upcoming events. Track their past and upcoming activities. Maintain a personalized profile with all their club memberships and event participations.',
   ),
   FaqItem(
-    question: 'When and where will the grand finale be held?',
-    answer: 'The grand finale will be held on [Date] at [Venue].',
+    question: 'What features are available for administrators?',
+    answer: 'Administrators can: Create and manage new clubs. Organize and update event details. Oversee user participation in events and club activities',
   ),
 ];
 
@@ -870,34 +919,6 @@ class PastEventCard extends HoverableEventCard {
     overlayColor: Colors.brown.withOpacity(0.8), // Brown overlay for past events
   );
 }
-
-// class RSVPPage extends StatelessWidget {
-//   final String eventTitle;
-//
-//   RSVPPage({required this.eventTitle});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text("RSVP for $eventTitle")),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           children: [
-//             Text("You're about to RSVP for: $eventTitle", style: TextStyle(fontSize: 20)),
-//             // Add your RSVP form or functionality here
-//             ElevatedButton(
-//               onPressed: () {
-//                 Navigator.pop(context);
-//               },
-//               child: Text("Confirm RSVP"),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 
 class CustomTextField extends StatelessWidget {
@@ -1237,6 +1258,74 @@ class _HoverableClubCardState extends State<HoverableClubCard> {
                     isJoined ? 'Joined' : 'Join',
                     style: TextStyle(color: Colors.white),
                   ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/background.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.all(24.0),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.7), // White transparent card
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Welcome to Clubstagram',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.playfairDisplay(
+                    fontSize: 64,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Connect. Create. Celebrate – Your Campus Events, Redefined.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black87,
+                    height: 1.5,
+                  ),
+                ),
+                SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                  child: Text('LOGIN'),
                 ),
               ],
             ),
