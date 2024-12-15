@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'login.dart';
 import 'register.dart';
+import 'rsvp.dart';
 
 
 
@@ -215,6 +216,7 @@ class _WelcomePageState extends State<WelcomePage> {
                               eventDate: 'Feb 15, 2025',
                               link: 'https://example.com/event3',
                             ),
+
                           ],
                         ),
                       ),
@@ -603,6 +605,7 @@ class UpcomingEventCard extends HoverableEventCard {
     eventDate: eventDate,
     link: link,
     overlayColor: Colors.black54, // Dark overlay for upcoming events
+
   );
 }
 
