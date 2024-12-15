@@ -60,6 +60,7 @@ flutter:
   assets:
     - assets/background.jpg
     - assets/events.jpg
+    - assets/past.jpg
     - assets/aboutus.jpg
     - assets/aboutus.gif
 

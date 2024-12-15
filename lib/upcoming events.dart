@@ -44,18 +44,20 @@ class EventsScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             'Leave your mark',
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
           ),
           SizedBox(height: 8),
           Text(
             'In a world fueled by innovation, every choice matters. Here, you don\'t just adapt; you define. It\'s more than technology — it\'s your legacy.',
             style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            textAlign: TextAlign.center,
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 32),
           Expanded(
             child: ListView.builder(
               itemCount: events.length,
@@ -85,52 +87,47 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Container(
       margin: EdgeInsets.symmetric(vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 24,
-              backgroundColor: Colors.purple.withOpacity(0.1),
-              child: Icon(event.icon, color: Colors.purple, size: 30),
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.3),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.white, width: 0.5),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(event.icon, color: Colors.purple, size: 40),
+          SizedBox(height: 12),
+          Text(
+            event.title,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 8),
+          Text(
+            event.description,
+            style: TextStyle(fontSize: 14, color: Colors.grey[800]),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 8),
+          Text(
+            'Learn more',
+            style: TextStyle(
+              color: Colors.blue,
+              fontSize: 14,
+              decoration: TextDecoration.underline,
             ),
-            SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    event.title,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    event.description,
-                    style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-                  ),
-                  SizedBox(height: 8),
-                  GestureDetector(
-                    onTap: () {
-                      // Handle "Learn more" button tap
-                    },
-                    child: Text(
-                      'Learn more',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 14,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

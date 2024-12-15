@@ -3,6 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'login.dart';
 import 'register.dart';
 
+
+
+
 void main() {
   runApp(MyApp());
 }
@@ -28,6 +31,7 @@ class _WelcomePageState extends State<WelcomePage> {
   final GlobalKey _homeSectionKey = GlobalKey();
   final GlobalKey _aboutSectionKey = GlobalKey();
   final GlobalKey _upcomingEventsSectionKey = GlobalKey();
+  final GlobalKey _pastEventsSectionKey = GlobalKey();
 
   void scrollToSection(GlobalKey sectionKey) {
     final RenderBox renderBox = sectionKey.currentContext?.findRenderObject() as RenderBox;
@@ -167,7 +171,13 @@ class _WelcomePageState extends State<WelcomePage> {
                   key: _upcomingEventsSectionKey,
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/events.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  // color: Colors.white,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
