@@ -174,54 +174,103 @@ class _WelcomePageState extends State<WelcomePage> {
                 // Upcoming Events Section
                 // Upcoming Events Section
                 // Upcoming Events Section
+                // Upcoming Events Section
                 Container(
                   key: _upcomingEventsSectionKey,
-                  color: Colors.white,
+                  color: Color(0xFF020F1F),
                   padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Section Title
+                      SizedBox(height: 5),
                       Text(
                         'Upcoming Events',
                         style: GoogleFonts.playfairDisplay(
                           fontSize: 36,
                           fontWeight: FontWeight.bold,
-                          color: Colors.brown,
+                          color: Colors.white,
                         ),
                       ),
                       SizedBox(height: 20),
-
-                      // Responsive Grid Layout for Event Cards
-                      LayoutBuilder(
-                        builder: (context, constraints) {
-                          int crossAxisCount = constraints.maxWidth > 600 ? 3 : 2; // Responsive grid
-
-                          return GridView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: crossAxisCount,
-                              crossAxisSpacing: 16.0,
-                              mainAxisSpacing: 16.0,
-                              childAspectRatio: 0.85, // Adjusted for description and RSVP button
+                      SizedBox(
+                        height: 260, // Increased height to accommodate the RSVP button
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            UpcomingEventCard(
+                              imagePath: 'assets/events/techtalk.jpg',
+                              eventName: 'Tech Talk 2024',
+                              eventDate: 'Dec 20, 2024',
+                              link: 'https://example.com/event1',
                             ),
-                            itemCount: eventData.length,
-                            itemBuilder: (context, index) {
-                              final event = eventData[index];
-                              return EventCard(
-                                imagePath: event['imagePath']!,
-                                eventName: event['name']!,
-                                eventDate: event['date']!,
-                                description: event['description']!,
-                              );
-                            },
-                          );
-                        },
+                            UpcomingEventCard(
+                              imagePath: 'assets/events/innovationfest.jpeg',
+                              eventName: 'Innovation Fest',
+                              eventDate: 'Jan 10, 2025',
+                              link: 'https://example.com/event2',
+                            ),
+                            UpcomingEventCard(
+                              imagePath: 'assets/events/cultural.jpg',
+                              eventName: 'Cultural Night',
+                              eventDate: 'Feb 15, 2025',
+                              link: 'https://example.com/event3',
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
+
+
+// Past Events Section
+                Container(
+                  key: _pastEventsSectionKey,
+                  color: Colors.blueGrey,
+                  padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Past Events',
+                        style: GoogleFonts.playfairDisplay(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      SizedBox(
+                        height: 220,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            PastEventCard(
+                              imagePath: 'assets/past/techexpo.jpg',
+                              eventName: 'Tech Expo 2023',
+                              eventDate: 'Nov 12, 2023',
+                              link: 'https://example.com/pastevent1',
+                            ),
+                            PastEventCard(
+                              imagePath: 'assets/past/hack.jpg',
+                              eventName: 'CodeFest Finale',
+                              eventDate: 'Oct 05, 2023',
+                              link: 'https://example.com/pastevent2',
+                            ),
+                            PastEventCard(
+                              imagePath: 'assets/past/art.jpg',
+                              eventName: 'Art & Culture Week',
+                              eventDate: 'Aug 19, 2023',
+                              link: 'https://example.com/pastevent3',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+
 
 
               ],
@@ -259,11 +308,11 @@ class _WelcomePageState extends State<WelcomePage> {
                           child: Text('About', style: TextStyle(color: Colors.white)),
                         ),
                         TextButton(
-                          onPressed: () => scrollToSection(_upcomingEventsSectionKey),
+                          onPressed: () => scrollToSection(_upcomingEventsSectionKey), //
                           child: Text('Upcoming Events', style: TextStyle(color: Colors.white)),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () => scrollToSection(_pastEventsSectionKey),
                           child: Text('Past Events', style: TextStyle(color: Colors.white)),
                         ),
                         TextButton(
@@ -451,4 +500,126 @@ final List<Map<String, String>> eventData = [
     'description': 'A sports event to showcase athletic talent.',
   },
 ];
+
+
+class HoverableEventCard extends StatefulWidget {
+  final String imagePath;
+  final String eventName;
+  final String eventDate;
+  final String link;
+  final Color overlayColor;
+
+  HoverableEventCard({
+    required this.imagePath,
+    required this.eventName,
+    required this.eventDate,
+    required this.link,
+    this.overlayColor = Colors.black54, // Default overlay color
+  });
+
+  @override
+  _HoverableEventCardState createState() => _HoverableEventCardState();
+}
+
+class _HoverableEventCardState extends State<HoverableEventCard> {
+  bool isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => isHovered = true),
+      onExit: (_) => setState(() => isHovered = false),
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
+        width: 200,
+        margin: EdgeInsets.only(right: 16.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+              color: isHovered ? Colors.white : Colors.black,
+              blurRadius: isHovered ? 12.0 : 6.0,
+              spreadRadius: isHovered ? 2.0 : 1.0,
+            ),
+          ],
+          image: DecorationImage(
+            image: AssetImage(widget.imagePath),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            padding: EdgeInsets.all(8.0),
+            color: widget.overlayColor,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  widget.eventName,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  widget.eventDate,
+                  style: TextStyle(color: Colors.white70, fontSize: 12),
+                ),
+                SizedBox(height: 8),
+                GestureDetector(
+                  onTap: () {
+                    // Handle navigation logic here if needed
+                  },
+                  child: Text(
+                    'Learn More →',
+                    style: TextStyle(
+                      color: Colors.lightBlueAccent,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Upcoming Event Card
+class UpcomingEventCard extends HoverableEventCard {
+  UpcomingEventCard({
+    required String imagePath,
+    required String eventName,
+    required String eventDate,
+    required String link,
+  }) : super(
+    imagePath: imagePath,
+    eventName: eventName,
+    eventDate: eventDate,
+    link: link,
+    overlayColor: Colors.black54, // Dark overlay for upcoming events
+  );
+}
+
+// Past Event Card
+class PastEventCard extends HoverableEventCard {
+  PastEventCard({
+    required String imagePath,
+    required String eventName,
+    required String eventDate,
+    required String link,
+  }) : super(
+    imagePath: imagePath,
+    eventName: eventName,
+    eventDate: eventDate,
+    link: link,
+    overlayColor: Colors.brown.withOpacity(0.8), // Brown overlay for past events
+  );
+}
+
 
