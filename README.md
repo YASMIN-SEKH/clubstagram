@@ -163,7 +163,7 @@ Feel free to add your name if you contribute to this project during the Build-A-
 
 For any inquiries or feedback, reach out to:
 
-- **Your Name**
+- **Yasmin Sekh**
 - **Email**: [yasmin0sekh0@gmail.com](mailto:yasmin0sekh0@gmail.com)
 - **GitHub**: [github.com/YASMIN-SEKH](https://github.com/YASMIN-SEKH)
 - **LinkedIn**: [linkedin.com/yasminsekh](https://www.linkedin.com/in/yasminsekh)
