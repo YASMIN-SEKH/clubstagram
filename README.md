@@ -44,10 +44,19 @@
 ## Installation
 
 ### Prerequisites
-[Add the prerequisites to run the website here]
+- Flutter SDK installed on your system.
+- Android Studio or Visual Studio Code for development.
+- A device or emulator for testing.
 
 ### Steps to run the project
-[Add the instructions to run the website here]
+1. Clone the repository:
+   - git clone [repository_url]
+2. Navigate to the project directory:
+   - cd [project_directory]
+3. Install dependencies:
+   - flutter pub get
+4. Run the project on your preferred device/emulator:
+   - flutter run
 
 ## Usage
 
