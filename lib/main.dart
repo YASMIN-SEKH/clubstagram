@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'login.dart';
 import 'register.dart';
 import 'rsvp.dart';
+import 'profile.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,19 +17,30 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
-        '/home': (context) => LoginPage(), // Define the home route
-        '/welcome': (context) => WelcomePage(),
+        '/login': (context) => LoginPage(),
+        '/welcome': (context) => WelcomePage(userData: {},),// Define the home route
+        '/register': (context) => RegisterPage(),
+        // '/profile': (context) => ProfilePage(userData: userData),
+
+
       },
     );
   }
 }
 
 class WelcomePage extends StatefulWidget {
+  final Map<String, dynamic> userData;
+
+  WelcomePage({required this.userData});
+
   @override
   _WelcomePageState createState() => _WelcomePageState();
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  late Map<String, dynamic> copiedUserData;
+  //copied data from register page
+
   final ScrollController _scrollController = ScrollController();
 
   final GlobalKey _homeSectionKey = GlobalKey();
@@ -48,8 +60,12 @@ class _WelcomePageState extends State<WelcomePage> {
       duration: Duration(milliseconds: 800),
       curve: Curves.easeInOut,
     );
-  }
+  }void initState() {
+    super.initState();
 
+    // Copy the passed userData into another variable
+    copiedUserData = Map.from(widget.userData);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,15 +97,16 @@ class _WelcomePageState extends State<WelcomePage> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            'Welcome to Clubstagram',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 64,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
+                        //   Text(
+                        //     'Welcome to Clubstagram',
+                        //     textAlign: TextAlign.center,
+                        //     style: GoogleFonts.playfairDisplay(
+                        //       fontSize: 64,
+                        //       fontWeight: FontWeight.bold,
+                        //       color: Colors.black,
+                        //     ),
+                        //   ),
+                        Text('Welcome, ${userData['firstName']}!', style: TextStyle(fontSize: 24)),
                           SizedBox(height: 16),
                           Text(
                             'Connect. Create. Celebrate – Your Campus Events, Redefined.',
@@ -103,17 +120,14 @@ class _WelcomePageState extends State<WelcomePage> {
                           SizedBox(height: 24),
                           ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => LoginPage()),
-                              );
+                              Navigator.pushNamed(context, '/register');
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,
                               foregroundColor: Colors.white,
                               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                             ),
-                            child: Text('LOGIN'),
+                            child: Text('Complete your profile'),
                           ),
                         ],
                       ),
@@ -470,7 +484,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           Center(
                             child: ElevatedButton(
                               onPressed: () {
-                                // Add functionality here
+                                Navigator.pushNamed(context, '/contactus');
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFFFFA774), // Orange color
@@ -481,11 +495,11 @@ class _WelcomePageState extends State<WelcomePage> {
                                 ),
                               ),
                               child: Text(
-                                "Shoooooooot",
+                                "Submit",
                                 style: GoogleFonts.roboto(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: const Color(0xFF2C2461), // Text color
+                                  color: Colors.black, // Text color
                                 ),
                               ),
                             ),
@@ -495,7 +509,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           // Footer Text
                           Center(
                             child: Text(
-                              "Your email will not be stored nor spammed, feel free to contact me.",
+                              "Your email will not be stored nor spammed, feel free to contact.",
                               style: GoogleFonts.roboto(
                                 color: Colors.grey.shade400,
                                 fontSize: 14,
@@ -544,6 +558,18 @@ class _WelcomePageState extends State<WelcomePage> {
                           onPressed: () => scrollToSection(_aboutSectionKey),
                           child: Text('About', style: TextStyle(color: Colors.white)),
                         ),
+                        TextButton(
+                          onPressed: () => scrollToSection(_upcomingEventsSectionKey),
+                          child: Text('Upcoming Events', style: TextStyle(color: Colors.white)),
+                        ),
+                        TextButton(
+                          onPressed: () => scrollToSection(_pastEventsSectionKey),
+                          child: Text('Past Eventss', style: TextStyle(color: Colors.white)),
+                        ),
+                        TextButton(
+                          onPressed: () => scrollToSection(_clubsKey),
+                          child: Text('Clubs', style: TextStyle(color: Colors.white)),
+                        ),
 
                         TextButton(
                           onPressed: () => scrollToSection(_faqSectionKey), //
@@ -553,69 +579,24 @@ class _WelcomePageState extends State<WelcomePage> {
                           onPressed: () => scrollToSection(_contactUsKey),
                           child: Text('Contact Us', style: TextStyle(color: Colors.white)),
                         ),
-                        DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            dropdownColor: Colors.transparent,
-                            icon: Icon(Icons.arrow_drop_down, color: Colors.transparent),
-                            items: [
-                              DropdownMenuItem(
-                                value: 'upcoming',
-                                child: Text('Upcoming Events', style: TextStyle(color: Colors.white)),
-                              ),
-                              DropdownMenuItem(
-                                value: 'past',
-                                child: Text('Past Events', style: TextStyle(color: Colors.white)),
-                              ),
-                            ],
-                            onChanged: (value) {
-                              if (value == 'upcoming') {
-                                scrollToSection(_upcomingEventsSectionKey);
-                              } else if (value == 'past') {
-                                scrollToSection(_pastEventsSectionKey);
-                              }
-                            },
-                            hint: Text('Events', style: TextStyle(color: Colors.white)),
-                          ),
-                        ),
-                        DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            dropdownColor: Colors.transparent,
-                            icon: Icon(Icons.arrow_drop_down, color: Colors.transparent),
-                            items: [
-                              DropdownMenuItem(
-                                value: 'sports',
-                                child: Text('Sports Club', style: TextStyle(color: Colors.white)),
-                              ),
-                              DropdownMenuItem(
-                                value: 'gaming',
-                                child: Text('Gaming Club', style: TextStyle(color: Colors.white)),
-                              ),
-                              DropdownMenuItem(
-                                value: 'coding',
-                                child: Text('Coding Club', style: TextStyle(color: Colors.white)),
-                              ),
-                            ],
-                            onChanged: (value) {
-                              // Implement club-specific navigation if needed
-                              scrollToSection(_clubsKey);
-                            },
-                            hint: Text('Clubs', style: TextStyle(color: Colors.white)),
-                          ),
-                        ),
+
+
                       ],
                     ),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => RegisterPage()),
+                          MaterialPageRoute(
+                            builder: (context) => ProfilePage(userData: copiedUserData),
+                          ),
                         );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         foregroundColor: Colors.black,
                       ),
-                      child: Text('REGISTER →'),
+                      child: Text('PROFILE →'),
                     ),
                   ],
                 ),
@@ -981,10 +962,10 @@ class RSVPPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('RSVP for $eventName'),
-        backgroundColor: Colors.brown,
-      ),
+      // appBar: AppBar(
+      //   title: Text('RSVP for $eventName'),
+      //   backgroundColor: Colors.brown,
+      // ),
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(16.0),
@@ -1011,7 +992,7 @@ class RSVPPage extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.brown,
+                  backgroundColor: Colors.black,
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 ),
                 child: Text('Confirm RSVP'),
@@ -1133,10 +1114,10 @@ class ClubDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('$clubName Details'),
-        backgroundColor: Colors.brown,
-      ),
+      // appBar: AppBar(
+      //   title: Text('$clubName Details'),
+      //   backgroundColor: Colors.white,
+      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1315,10 +1296,7 @@ class HomePage extends StatelessWidget {
                 SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                    );
+                    Navigator.pushNamed(context, '/login');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
@@ -1335,3 +1313,4 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+

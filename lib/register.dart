@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'main.dart'; // Import the WelcomePage
+
+// To store user data globally
+Map<String, dynamic> userData = {};
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -22,7 +26,6 @@ class _RegisterPageState extends State<RegisterPage> {
   String? _selectedMonth;
   String? _selectedDay;
   String? _selectedYear;
-  String? _uploadedFile;
 
   // Dropdown options
   final List<String> _yearLevels = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
@@ -32,18 +35,13 @@ class _RegisterPageState extends State<RegisterPage> {
   final List<String> _years = List.generate(100, (index) => '${DateTime.now().year - index}');
 
   // Checkboxes for extracurricular activities and talents
-  List<String> _extraCurriculars = [
-    'Student Council',
-    'Class Officer',
-    'Club/Organization',
-    'Varsity Player'
-  ];
+  List<String> _extraCurriculars = ['Student Council', 'Class Officer', 'Club/Organization', 'Varsity Player'];
   List<String> _selectedExtraCurriculars = [];
 
   List<String> _skills = [
-    'Acting', 'Arts/Crafts', 'Calculating', 'Dancing', 'Debating', 'Drawing', 'Eating',
-    'Fashion', 'Photography', 'Playing guitar', 'Playing piano', 'Playing drums',
-    'Programming', 'Singing', 'Writing'
+    'Acting', 'Arts/Crafts', 'Calculating', 'Dancing', 'Debating', 'Drawing',
+    'Eating', 'Fashion', 'Photography', 'Playing guitar', 'Playing piano',
+    'Playing drums', 'Programming', 'Singing', 'Writing'
   ];
   List<String> _selectedSkills = [];
 
@@ -64,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Container(
-              width: screenWidth * 0.6, // 90% of screen width
+              width: screenWidth * 0.6, // 60% of screen width
               child: Card(
                 margin: EdgeInsets.all(20),
                 elevation: 5,
@@ -86,7 +84,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                         SizedBox(height: 24),
-
                         Text(
                           'Basic Information',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
@@ -94,6 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         Divider(),
                         SizedBox(height: 16),
 
+                        // Form Fields
                         _buildTextField(_firstNameController, 'First Name'),
                         SizedBox(height: 16),
                         _buildTextField(
@@ -114,8 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           value: _selectedDegreeProgram,
                           items: _degreePrograms,
                           label: 'Degree Program',
-                          onChanged: (value) =>
-                              setState(() => _selectedDegreeProgram = value),
+                          onChanged: (value) => setState(() => _selectedDegreeProgram = value),
                         ),
                         SizedBox(height: 16),
                         _buildTextField(
@@ -132,7 +129,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           keyboardType: TextInputType.phone,
                         ),
                         SizedBox(height: 16),
-
                         Text(
                           'Birth Date',
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
@@ -170,6 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         SizedBox(height: 24),
 
+                        // Extra Curricular Activities
                         Text(
                           'Extra Curricular Participation',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
@@ -178,6 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         _buildMultiCheckbox('Extra Curriculars', _extraCurriculars, _selectedExtraCurriculars),
                         SizedBox(height: 16),
 
+                        // Skills/Talents
                         Text(
                           'Skills/Talents',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
@@ -186,11 +184,18 @@ class _RegisterPageState extends State<RegisterPage> {
                         _buildMultiCheckbox('Skills', _skills, _selectedSkills),
                         SizedBox(height: 24),
 
+                        // Register Button
                         Center(
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 _submitForm();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => WelcomePage(userData: userData),
+                                  ),
+                                );
                               }
                             },
                             style: ElevatedButton.styleFrom(
@@ -261,6 +266,20 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _submitForm() {
-    print('Form submitted');
+    userData = {
+      'firstName': _firstNameController.text,
+      'middleName': _middleNameController.text,
+      'lastName': _lastNameController.text,
+      'studentNumber': _studentNumberController.text,
+      'email': _emailController.text,
+      'phoneNumber': _phoneNumberController.text,
+      'yearLevel': _selectedYearLevel ?? 'Not Selected',
+      'degreeProgram': _selectedDegreeProgram ?? 'Not Selected',
+      'birthMonth': _selectedMonth ?? 'Not Selected',
+      'birthDay': _selectedDay ?? 'Not Selected',
+      'birthYear': _selectedYear ?? 'Not Selected',
+      'extraCurriculars': _selectedExtraCurriculars,
+      'skills': _selectedSkills,
+    };
   }
 }
