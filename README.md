@@ -96,9 +96,6 @@
 ![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/b.png)
 *Caption for the screenshot.*
 
-![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/c.png)
-*Caption for the screenshot.*
-
 ![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/d.png)
 *Caption for the screenshot.*
 
@@ -144,6 +141,8 @@
 ![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/r.png)
 *Caption for the screenshot.*
 
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/c.png)
+*Caption for the screenshot.*
 
 
 
