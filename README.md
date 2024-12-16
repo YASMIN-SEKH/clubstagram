@@ -33,7 +33,7 @@
 ## Technologies Used
 
 - **Frontend**: Flutter (Dart)
-- **Backend**: Node.js, Flask, Firebase (Authentication, Firestore)[to be implemented]
+- **Backend**: python, Node.js, Flask, Firebase (Authentication, Firestore)
 - **Database**: Firebase
 - **Styling**: Material UI, Material Design, Google Fonts, Google icons
 - **APIs**: custom APIs
@@ -58,11 +58,62 @@
 
 ## Screenshots
 
-![Screenshot 1](path/to/screenshot1.png)
+![Screenshot 1](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/a.png)
 *Caption for the screenshot.*
 
-![Screenshot 2](path/to/screenshot2.png)
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/b.png)
 *Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/c.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/d.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/e.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/f.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/g.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/h.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/i.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/j.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/k.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/l.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/m.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/n.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/o.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/p.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/q.png)
+*Caption for the screenshot.*
+
+![Screenshot 2](https://github.com/YASMIN-SEKH/clubstagram/blob/main/screenshots/r.png)
+*Caption for the screenshot.*
+
+
+
 
 ---
 
