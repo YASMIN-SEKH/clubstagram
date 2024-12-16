@@ -50,9 +50,9 @@
 
 ### Steps to run the project
 1. Clone the repository:
-   - git clone [repository_url]
+   - git clone https://github.com/YASMIN-SEKH/clubstagram
 2. Navigate to the project directory:
-   - cd [project_directory]
+   - cd clubstagram
 3. Install dependencies:
    - flutter pub get
 4. Run the project on your preferred device/emulator:
@@ -60,8 +60,31 @@
 
 ## Usage
 
-1. Describe how to use your website, e.g., "Navigate to the home page, log in, and explore various features like [feature examples]."
-2. Provide any credentials if applicable for testing (e.g., demo accounts).
+1. Launch the website
+2. Login using below credentials:
+   - username: Rahul
+   - password: Rahul@123
+3. Navigate through the homepage to explore various sections:
+   - Home Page
+   - About Us
+   - Upcoming events
+   - Past Events
+   - Clubs
+   - FAQ page
+   - Contact us page
+4. Complete your profile by clicking the complete your profile button in the home
+5. View your profile by clicking PROFILE-> button in the top right corner of the page
+6. Navigate to the events page
+7. RSVP Upcoming events, click to view description and other details about the event
+8. View past events
+9. scroll the events in vertical to view the effects
+10. Navigate to clubs section
+11. join clubs
+12. Navigate to FAQ section
+13. Click on different question cards to view answers
+14. If you have more questions then navigate to contact us page
+15. Get in touch by answer the form in contact us page
+
 
 ---
 
@@ -130,9 +153,8 @@
 
 We thank the following people for their contributions to this project:
 
-- **[Name 1]** - [GitHub Profile](https://github.com/name1)
-- **[Name 2]** - [GitHub Profile](https://github.com/name2)
-- **[Name 3]** - [GitHub Profile](https://github.com/name3)
+- **Yasmin Sekh** - [GitHub Profile](https://github.com/YASMIN-SEKH)
+
 
 Feel free to add your name if you contribute to this project during the Build-A-Site hackathon!
 
@@ -143,6 +165,7 @@ Feel free to add your name if you contribute to this project during the Build-A-
 For any inquiries or feedback, reach out to:
 
 - **Your Name**
-- **Email**: [your-email@example.com](mailto:your-email@example.com)
-- **GitHub**: [github.com/your-username](https://github.com/your-username)
-- **Website**: [your-website.com](https://your-website.com)
+- **Email**: [yasmin0sekh0@gmail.com](mailto:yasmin0sekh0@gmail.com)
+- **GitHub**: [github.com/YASMIN-SEKH](https://github.com/YASMIN-SEKH)
+- **LinkedIn**: [linkedin.com/yasminsekh](https://www.linkedin.com/in/yasminsekh)
+- **Website**: [Clubstagram](https://clubstagram-44dc0.web.app)
